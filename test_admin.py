@@ -5,7 +5,11 @@ import unittest
 
 class TestCaseAdmin(unittest.TestCase):
     def setUp(self):
-        self.wd = webdriver.Chrome(executable_path="D:/Python36/chromedriver.exe")
+        self.wd = webdriver.Firefox()
+        # self.wd = webdriver.Chrome(executable_path="D:/Python36/chromedriver.exe")
+        # self.wd = webdriver.Ie()
+        # capabilities=("unexpectedAlertBehaviour": "dismiss")
+        # print(wd.c)
         self.wd.implicitly_wait(10)
 
     def test_admin_login(self):
