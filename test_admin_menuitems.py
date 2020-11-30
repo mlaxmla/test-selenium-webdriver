@@ -28,7 +28,6 @@ class TestCaseAdminMenuItems(unittest.TestCase):
             href = element.get_attribute("href")
             hrefs_list.append(href)
         # 3)    Dla każdej strony sprawdzenie nagłówka (to znaczy elementu z tagiem h1).
-        headers_list = []
         headers_expected_list = ['Template', 'Catalog', 'Countries', 'Currencies', 'Customers', 'Geo Zones', 'Languages', 'Job Modules', 'Orders', 'Pages', 'Monthly Sales', 'Settings', 'Slides', 'Tax Classes', 'Search Translations', 'Users', 'vQmods']
         for nameitem, hrefitem, headerexpecteditem in zip(names_list, hrefs_list, headers_expected_list):
             wd.get(hrefitem)
