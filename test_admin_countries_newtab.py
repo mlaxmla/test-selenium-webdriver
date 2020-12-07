@@ -33,20 +33,19 @@ class TestCaseAdminCountriesNewtab(unittest.TestCase):
         for element in fields_with_external_links_elements:
             old_windows = wd.window_handles
             element.click()
-            # todo: how to orrectly enable method 'there_is_window_other_than'?
-            new_window = wait.until(TestCaseAdminCountriesNewtab.there_is_window_other_than(self, old_windows))
+            new_window = self.there_is_window_other_than(old_windows)
             wd.switch_to.window(new_window)
             wd.close()
             wd.switch_to.window(main_window)
-            time.sleep(2)
+            # time.sleep(2)
 
     def there_is_window_other_than(self, old_windows):
         wd = self.wd
-        new_windows = wd.window_handles
         wait = WebDriverWait(wd, 10)
+        new_windows = wd.window_handles
         wait.until(lambda d: len(old_windows) < len(new_windows))
-        new_window = old_windows - new_windows
-        return new_window
+        new_window = [x for x in new_windows if x not in old_windows]
+        return new_window[0]
 
     def tearDown(self):
         self.wd.quit()
