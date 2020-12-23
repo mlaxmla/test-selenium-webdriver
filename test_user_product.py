@@ -50,6 +50,11 @@ class TestCaseUserProduct(unittest.TestCase):
         # HINT: 1) "gray" is one that has the same values for the R, G and B channels in the RGBa representation, the "red" color is the one that has zero values for the G and B channels in the RGBa representation. It is necessary to get the color channels and compare these values on each page separately.
         assert Color.from_string(product_regularprice_color).red == Color.from_string(product_regularprice_color).green == Color.from_string(product_regularprice_color).blue
         assert Color.from_string(product_campaignprice_color).green == Color.from_string(product_campaignprice_color).blue == 0
+        # HINT 3: 1) Please note, that You have to get the color channels and compare these values on each page separately.  From these lines: 'rgb (204, 0, 0, 1)' you have to get the channels, using the programming language.
+        product_regularprice_color_rgba_list = product_regularprice_color[product_regularprice_color.find("(") + 1:product_regularprice_color.find(")")].split(", ")
+        assert product_regularprice_color_rgba_list[0] == product_regularprice_color_rgba_list[1] == product_regularprice_color_rgba_list[2]
+        product_campaignprice_color_rgba_list = product_campaignprice_color[product_campaignprice_color.find("(") + 1:product_campaignprice_color.find(")")].split(", ")
+        assert product_campaignprice_color_rgba_list[1] == product_campaignprice_color_rgba_list[2] == '0'
         product_campaignprice_fontweight = product_campaignprice.value_of_css_property("font-weight")
         assert product_campaignprice_fontweight == '700'
         assert first_product_regularprice_value == product_regularprice_value
@@ -58,6 +63,10 @@ class TestCaseUserProduct(unittest.TestCase):
         # HINT: 2) In this task you should also check the font size, this is the "font-size" property --> not mentioned in polish translation, but I'll try guess which assertion were missing: product_regularprice_fontsize, product_campaignprice_fontsize
         assert product_regularprice.value_of_css_property("font-size") == '16px'
         assert product_campaignprice.value_of_css_property("font-size") == '22px'
+        # + HINT 2) Font sizes should also be compared to each other as numbers, not as a string --> not mentioned in polish translation, but I'll try to fullfil your expectation
+        assertint (''.join(filter(str.isdigit, product_regularprice.value_of_css_property("font-size")))) == 16
+        assert int(''.join(filter(str.isdigit, product_campaignprice.value_of_css_property("font-size")))) == 22
+
 
     def tearDown(self):
         self.wd.quit()
